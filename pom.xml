@@ -27,40 +27,40 @@
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
-			<version>1.4.7</version>
+			<version>${javaxMail}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-csv</artifactId>
-			<version>1.0</version>
+			<version>${commonsCSV}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
+			<version>${commonsIO}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
+			<version>${commonsLang}</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-collections4</artifactId>
-		    <version>4.0</version>
+		    <version>${commonsCollections}</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
+			<version>${log4j}</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.3.3</version>
+			<version>${httpClient}</version>
 		</dependency>
 	</dependencies>
 
@@ -72,6 +72,13 @@
 		<notificationFrameworkVersion>1.0-SNAPSHOT</notificationFrameworkVersion>
 		<junitVersion>4.11</junitVersion>
 		<springWSVersion>2.2.0.RELEASE</springWSVersion>
+		<javaxMail>1.4.7</javaxMail>
+		<commonsCSV>1.0</commonsCSV>
+		<commonsIO>2.4</commonsIO>
+		<commonsLang>3.4</commonsLang>
+		<commonsCollections>4.0</commonsCollections>
+		<log4j>1.2.16</log4j>
+		<httpClient>4.3.3</httpClient>
 	</properties>
 
 	<repositories>
