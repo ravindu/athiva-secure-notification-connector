@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Request>
+  <TransactionType>Secure Notification Transaction</TransactionType>
+  <Recipients>
+    <Recipient>
+      <email>ravindu.s@aeturnum.com</email>
+      <firstName>tester</firstName>
+      <lastName>123</lastName>
+    </Recipient>
+  </Recipients>
+  <CustomMessage>Hi, This is a test message from sample notification connector.</CustomMessage>
+</Request>
