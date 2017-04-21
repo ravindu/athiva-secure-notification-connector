@@ -9,10 +9,11 @@ import com.athiva.notification.application.common.AthivaNotificationStatus;
 import com.athiva.notification.connector.service.ExternalStatus;
 import com.athiva.notification.connector.service.MessageResponse;
 import com.athiva.notification.secureemailconnector.domain.message.SecureEmailResponse;
+
 /**
  * 
  * @author ravindu.s
- *
+ * 
  */
 @Component
 public class MessageResponseTransformer {
@@ -26,34 +27,35 @@ public class MessageResponseTransformer {
         List<ExternalStatus> externalStatus = buildNotificationExtrnalStatus(emailReponse);
 
         String rawOutput = emailReponse.getRawOutput();
-
         if (rawOutput != null) {
             messageResponse = new MessageResponse.Builder().withNotificationStatus(notificationStatus)
                     .withExternalStatusList(externalStatus).withRawOutput(rawOutput).build();
+            return messageResponse;
 
-        } else {
-            messageResponse = new MessageResponse.Builder().withNotificationStatus(notificationStatus)
-                    .withExternalStatusList(externalStatus).build();
         }
+
+        messageResponse = new MessageResponse.Builder().withNotificationStatus(notificationStatus)
+                .withExternalStatusList(externalStatus).build();
         return messageResponse;
+
     }
 
     private List<ExternalStatus> buildNotificationExtrnalStatus(final SecureEmailResponse emailReponse) {
 
-        List<ExternalStatus> externalStatusList;
+        List<ExternalStatus> externalStatusList = null;
 
         if (emailReponse == null) {
-            externalStatusList = null;
+            return externalStatusList;
 
-        } else {
-
-            String code = emailReponse.getResponseCode().toString();
-            String description = emailReponse.getResponseDescription();
-            ExternalStatus status = new ExternalStatus(code, description);
-
-            externalStatusList = new ArrayList<ExternalStatus>(1);
-            externalStatusList.add(status);
         }
+
+        String code = emailReponse.getResponseCode().toString();
+        String description = emailReponse.getResponseDescription();
+        ExternalStatus status = new ExternalStatus(code, description);
+
+        externalStatusList = new ArrayList<ExternalStatus>(1);
+        externalStatusList.add(status);
+
         return externalStatusList;
     }
 
