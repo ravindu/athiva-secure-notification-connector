@@ -38,10 +38,11 @@ import com.athiva.notification.secureemailconnector.domain.common.SecureEmailRes
 import com.athiva.notification.secureemailconnector.domain.message.SecureEmailRequest;
 import com.athiva.notification.secureemailconnector.domain.message.SecureEmailResponse;
 import com.athiva.notification.secureemailconnector.domain.message.SecureEmailService;
+
 /**
  * 
  * @author ravindu.s
- *
+ * 
  */
 @Service
 public class SecureEmailServiceImpl implements SecureEmailService {
@@ -134,6 +135,16 @@ public class SecureEmailServiceImpl implements SecureEmailService {
         return secureEmailResponse;
     }
 
+    /**
+     * Bind several multipart objects a single multipart object which include text/html contends, attachments and set to
+     * the MimeMessage
+     * 
+     * @param emailRequest
+     * @return
+     * @throws MessagingException
+     * @throws UnsupportedEncodingException
+     * @throws AddressException
+     */
     protected MimeMessage BuildMimeMessage(final SecureEmailRequest emailRequest) throws MessagingException,
             UnsupportedEncodingException, AddressException {
         MimeMessage mimeMessage = new MimeMessage(session);
@@ -149,12 +160,29 @@ public class SecureEmailServiceImpl implements SecureEmailService {
         return mimeMessage;
     }
 
+    /**
+     * Add message subject and date to MimeMessage
+     * 
+     * @param emailRequest
+     * @param mimeMessage
+     * @throws MessagingException
+     */
     protected void setSubjectAndDateToMimeMessage(final SecureEmailRequest emailRequest, MimeMessage mimeMessage)
             throws MessagingException {
         mimeMessage.setSubject(emailRequest.getMessageSubject());
         mimeMessage.setSentDate(new Date());
     }
 
+    /**
+     * Build MimeMessageMultipart
+     * 
+     * @param emailRequest
+     * @param mimeMessage
+     * @return
+     * @throws MessagingException
+     * @throws UnsupportedEncodingException
+     * @throws AddressException
+     */
     protected Multipart buildMimeMessageMultipart(final SecureEmailRequest emailRequest, final MimeMessage mimeMessage)
             throws MessagingException, UnsupportedEncodingException, AddressException {
 
@@ -180,12 +208,28 @@ public class SecureEmailServiceImpl implements SecureEmailService {
         return parentMultiPartWithTextAndAttachment;
     }
 
+    /**
+     * Set headers to MimeMessage
+     * 
+     * @param messageId
+     * @param mimeMessage
+     * @throws MessagingException
+     * @throws UnsupportedEncodingException
+     */
     private void setMimeMessageHeaders(final String messageId, final MimeMessage mimeMessage)
             throws MessagingException, UnsupportedEncodingException {
         mimeMessage.setHeader(HEADER_MESSAGE_ID_KEY, messageId);
         mimeMessage.setHeader(HEADER_CONTENT_ENCODING_KEY, MimeUtility.encodeText(textEncodeType));
     }
 
+    /**
+     * Set recipients to MimeMessage including TO and CC
+     * 
+     * @param emailRequest
+     * @param mimeMessage
+     * @throws MessagingException
+     * @throws AddressException
+     */
     private void setMimeMessageRecipients(final SecureEmailRequest emailRequest, final MimeMessage mimeMessage)
             throws MessagingException, AddressException {
         mimeMessage.setFrom(new InternetAddress(emailRequest.getMessageFrom()));
@@ -196,6 +240,14 @@ public class SecureEmailServiceImpl implements SecureEmailService {
 
     }
 
+    /**
+     * Add message body and message encoding type to textHtml multipart
+     * 
+     * @param messageEncodeType
+     * @param message_body
+     * @return
+     * @throws MessagingException
+     */
     private Multipart addTextHtmlMultipart(final MessageEncodeType messageEncodeType, final String message_body)
             throws MessagingException {
 
@@ -210,6 +262,13 @@ public class SecureEmailServiceImpl implements SecureEmailService {
 
     }
 
+    /**
+     * Add text/html multipart to MimeBodyPart
+     * 
+     * @param textHtmlMultiPart
+     * @return
+     * @throws MessagingException
+     */
     private MimeBodyPart addMimeBodyPartWithTextHtmlContend(final Multipart textHtmlMultiPart)
             throws MessagingException {
         MimeBodyPart textHtmlBodyContendPart = new MimeBodyPart();
@@ -217,6 +276,14 @@ public class SecureEmailServiceImpl implements SecureEmailService {
         return textHtmlBodyContendPart;
     }
 
+    /**
+     * Bind email attachments and text/html contend as a single multipart
+     * 
+     * @param textHtmlBodyContendPart
+     * @param emailRequest
+     * @return
+     * @throws MessagingException
+     */
     private Multipart addMultiPartWithBothTextAndAttachment(final MimeBodyPart textHtmlBodyContendPart,
             final SecureEmailRequest emailRequest) throws MessagingException {
 
@@ -240,6 +307,13 @@ public class SecureEmailServiceImpl implements SecureEmailService {
         return parentMultiPartWithTextAndAttachment;
     }
 
+    /**
+     * Build email response.
+     * 
+     * @param responseCode
+     * @param rawOutput
+     * @return
+     */
     private SecureEmailResponse buildSecureEmailResponse(final SecureEmailResponseCode responseCode,
             final String rawOutput) {
 
@@ -251,6 +325,12 @@ public class SecureEmailServiceImpl implements SecureEmailService {
         return secureEmailResponse;
     }
 
+    /**
+     * Build error response if invalid address found.
+     * 
+     * @param sendFailedException
+     * @return
+     */
     private SecureEmailResponse buildEmailResponseIfInvalidAddresesFound(final SendFailedException sendFailedException) {
 
         Address[] invalidAddresses = sendFailedException.getInvalidAddresses();
@@ -260,6 +340,13 @@ public class SecureEmailServiceImpl implements SecureEmailService {
         return secureEmailResponse;
     }
 
+    /**
+     * Retry Email sending if Unsent addresse found.
+     * 
+     * @param sendFailedException
+     * @param emailRequest
+     * @return
+     */
     private SecureEmailResponse buildEmailResponseIfUnsentAddresesFound(final SendFailedException sendFailedException,
             final SecureEmailRequest emailRequest) {
 
@@ -304,6 +391,12 @@ public class SecureEmailServiceImpl implements SecureEmailService {
         return secureEmailResponse;
     }
 
+    /**
+     * Retrieve unsent email address
+     * 
+     * @param validUnsentAddresses
+     * @return
+     */
     private String retrieveUnsentEmailAddress(final Address[] validUnsentAddresses) {
 
         String unsentEmailAddress = null;
