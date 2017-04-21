@@ -3,7 +3,7 @@
   <TransactionType>Secure Notification Transaction</TransactionType>
   <Recipients>
     <Recipient>
-      
+      <email>ravindu.s@aeturnum.com</email>
       <firstName>tester</firstName>
       <lastName>123</lastName>
     </Recipient>

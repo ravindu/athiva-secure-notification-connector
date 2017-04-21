@@ -26,7 +26,7 @@ import com.athiva.notification.application.util.IOUtil;
  */
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/test-applicationContext.xml" })
+@ContextConfiguration(locations = { "classpath:spring/test-secure-notification-context.xml" })
 public class SampleConnectorSecureMessagePublisherTest {
 
 	@Autowired
@@ -35,7 +35,7 @@ public class SampleConnectorSecureMessagePublisherTest {
 	@Value("${athiva.notification.connector.queue}")
 	private String sampleConnectorQueue;
 
-	@Value("${athiva.notification.sample.reply.queue}")
+	@Value("${athiva.notification.emailconnector.reply.queue}")
 	private String sampleReplyQueue;
 
 	@Test
